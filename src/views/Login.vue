@@ -30,7 +30,7 @@
             </a-input>
           </a-form-item>
           <a-form-item :wrapper-col="{ offset: 6, span: 12 }">
-            <a-button type="primary"  html-type="submit" style="width: 100%">登录</a-button>
+            <a-button @click="login" type="primary"  html-type="submit" style="width: 100%">登录</a-button>
           </a-form-item>
         </a-form>
       </a-col>
@@ -41,20 +41,44 @@
 </template>
 <script>
 import { defineComponent, reactive } from 'vue';
+import {getCode, loginReq} from "@/API";
+import {notification} from "ant-design-vue";
+/**
+ * useRouter --全局路由的管理--》路由的管理者
+ * useRoute --当前路由  -->获取当前路由的信息
+ */
+import {useRouter} from "vue-router";
 export default defineComponent({
   name: "login-view",
   setup() {
+    const router=useRouter()
+
     const loginForm = reactive({
       mobile: '16607211504',
       code: '',
     });
 
-    const sendCode = () => {
-
-    };
+    const sendCode = ()=>{
+      getCode(loginForm.mobile).then(res => {
+        notification.success({description:'验证码为'+res.data})
+        loginForm.code=res.data
+      }).catch(err=>{
+        console.log(err);
+      })
+    }
 
     const login = () => {
-
+      loginReq(loginForm.mobile,loginForm.code).then(res=>{
+        console.log(res)
+        if (res.code === 200){
+          notification.success({description:res.message})
+          router.push('/main')
+        }else {
+          notification.error({description:res.message})
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
     };
 
     return {
