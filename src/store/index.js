@@ -11,7 +11,12 @@ export default createStore({
       console.log(member)
       state.member=member
       window.SessionStorage.set(MEMBER,member)
-    }
+    },
+    clearMember(state){
+      console.log('store正在清除member')
+      state.member= {}
+      window.SessionStorage.set(MEMBER,{})
+    },
   },
   actions: {
   },

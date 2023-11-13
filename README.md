@@ -143,3 +143,49 @@ const login = () => {
 2.token被拿到第三方使用
     限流  
 ```
+* **加入vuex来作为全局变量**
+```js
+const routes = [
+  {
+    path: '/',
+    name: 'login',
+    component:()=>import('@/views/Login.vue')
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component:()=>import('@/views/Main.vue'),
+    meta: {
+      loginRequire: true
+    },
+  },
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+// 路由登录拦截
+router.beforeEach((to, from, next) => {
+  // 要不要对meta.loginRequire属性做监控拦截
+  if (to.matched.some(function (item) {
+    console.log(item, "是否需要登录校验：", item.meta.loginRequire || false);
+    return item.meta.loginRequire
+  })) {
+    const _member = store.state.member;
+    console.log("页面登录校验开始：", _member);
+    if (!_member.token) {
+      console.log("用户未登录或登录超时！");
+      notification.error({ description: "未登录或登录超时" });
+      next('/');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+export default router
+```
+**这里的路由拦截器就是当没有登录的时候，根据路劲来访问页面，实现一个页面的跳转到登录页面的功能**

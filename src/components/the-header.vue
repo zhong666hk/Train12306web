@@ -7,11 +7,13 @@
           &nbsp; &nbsp;请登录
         </router-link>
       </span>
-      <span v-else>
+      <span v-else >
         您好:{{member.mobile}}&nbsp; &nbsp;
-        <router-link to="/">
+        <span @click="store.commit('clearMember')">
+          <router-link to="/">
           退出登录
         </router-link>
+        </span>
       </span>
     </div>
     <a-menu
@@ -33,6 +35,9 @@ import store from "@/store";
 export default defineComponent({
   name: "the-header-view",
   computed: {
+    store() {
+      return store
+    }
   },
   setup() {
     let member=store.state.member
