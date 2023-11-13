@@ -121,3 +121,25 @@ const login = () => {
 * the-header 头部
 * the-side 左部导航栏
 * center 中间主要部分
+## 4.单点登录的两种方式
+### 4.1 token+redis的方式实现单点登录
+* 1.校验用户名密码
+* 2.每次登录都生成token每次都不一样
+* 3.将token放入redis，以token为key，用户的信息为value
+* 4.将token返回给前端
+* 5.从header获取token
+* 6.到redis中获取token的value
+### 4.2 JWT单点登录的方式实现单点登录
+* 1.校验用户名密码
+* 2.每次都会生成token,每次也是都不一样
+* 3.是根据自己的加密方式生成的token,token是有价值的
+* 4.将token返回给前端
+* 5.从header获取token
+* 6.解密token校验用户信息  
+**存在的问题**
+```text
+1.token被解密
+    加盐值(密钥),每个项目的盐值不一样
+2.token被拿到第三方使用
+    限流  
+```

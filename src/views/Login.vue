@@ -48,6 +48,7 @@ import {notification} from "ant-design-vue";
  * useRoute --当前路由  -->获取当前路由的信息
  */
 import {useRouter} from "vue-router";
+import store from "@/store";
 export default defineComponent({
   name: "login-view",
   setup() {
@@ -72,6 +73,7 @@ export default defineComponent({
         console.log(res)
         if (res.code === 200){
           notification.success({description:res.message})
+          store.commit("setMember",{token:res.data.token,mobile:loginForm.mobile})
           router.push('/main')
         }else {
           notification.error({description:res.message})
