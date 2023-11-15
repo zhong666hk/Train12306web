@@ -189,3 +189,12 @@ router.beforeEach((to, from, next) => {
 export default router
 ```
 **这里的路由拦截器就是当没有登录的时候，根据路劲来访问页面，实现一个页面的跳转到登录页面的功能**
+## 5.主页面的优化，添加监视器
+* 当页面的路劲变化的时候要菜单栏的选择也变化 header和side
+```js
+watch(()=>router.currentRoute.value.path,(newValue)=>{
+  console.log('watch',newValue);
+  selectedKeys2.value=[];
+  selectedKeys2.value.push(newValue);
+},{immediate:true})
+```

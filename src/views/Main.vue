@@ -4,15 +4,11 @@
     <a-layout>
       <the-side-view></the-side-view>
       <a-layout style="padding: 0 24px 24px">
-        <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>Home</a-breadcrumb-item>
-          <a-breadcrumb-item>List</a-breadcrumb-item>
-          <a-breadcrumb-item>App</a-breadcrumb-item>
-        </a-breadcrumb>
+
         <a-layout-content
-            :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
+            :style="{ background: '#fff', padding: '24px', margin: 0, }"
         >
-          Content
+          <router-view/>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -48,5 +44,16 @@ export default defineComponent({
 
 .site-layout-background {
   background: #fff;
+}
+#root,body,html {
+  height: 100%;
+}
+.ant-layout {
+  display: flex!important;
+  width: 100%!important;
+  min-height: 100%!important;
+}
+.container{
+  height: 100%;
 }
 </style>

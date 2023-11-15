@@ -74,7 +74,7 @@ export default defineComponent({
         if (res.code === 200){
           notification.success({description:res.message})
           store.commit("setMember",{token:res.data.token,mobile:loginForm.mobile})
-          router.push('/main')
+          router.push('/welcome')
         }else {
           notification.error({description:res.message})
         }
@@ -91,7 +91,7 @@ export default defineComponent({
   },
 });
 </script>
-<style>
+<style scoped>
  .loginMain{
    margin-top: 10%;
    background: linear-gradient(to right, rgb(140, 203, 233) 10%, rgba(27, 201, 201, 0.8) 40%, rgba(26, 154, 224, 0.1) 70%);

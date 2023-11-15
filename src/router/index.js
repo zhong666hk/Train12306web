@@ -10,17 +10,31 @@ const routes = [
   // },
   //   懒加载的方式
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     component:()=>import('@/views/Login.vue')
   },
   {
-    path: '/main',
+    path: '/',
     name: 'main',
     component:()=>import('@/views/Main.vue'),
     meta: {
       loginRequire: true
     },
+    children: [
+      {
+        path: '/welcome',
+        component:()=>import("@/views/main/welcome.vue"),
+      },
+      {
+        path: '/passenger',
+        component:()=>import("@/views/main/passenger.vue"),
+      },
+    ]
+  },
+  {
+    path: '',
+    redirect: '/welcome'
   },
 ]
 
@@ -40,7 +54,7 @@ router.beforeEach((to, from, next) => {
     if (!_member.token) {
       console.log("用户未登录或登录超时！");
       notification.error({ description: "未登录或登录超时" });
-      next('/');
+      next('/login');
     } else {
       next();
     }
