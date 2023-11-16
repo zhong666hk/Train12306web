@@ -198,3 +198,35 @@ watch(()=>router.currentRoute.value.path,(newValue)=>{
   selectedKeys2.value.push(newValue);
 },{immediate:true})
 ```
+## 6.添加乘车人的交互式页面的开发
+* passenger页面的改变
+* 页面更换为一个modal对话框和表单结合+js的提交代码
+```js
+const handleOk = () => {
+  savePassenger(passenger).then(res=>{
+    if (res.data){
+      notification.success({description:res.message})
+      // 清除本地数据
+      passenger.type=undefined;
+      passenger.name=''
+      passenger.idCard=''
+      open.value = false;
+    }else{
+      notification.error({description:'新增乘客异常'})
+    }
+  })
+};
+```
+* axios模块
+```js
+export function savePassenger(passenger){
+  //http://localhost:8090/api/
+  return request({
+    url: '/passenger/save',
+    method: 'POST',
+    data:{
+      ...passenger
+    }
+  })
+}
+```

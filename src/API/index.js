@@ -24,3 +24,15 @@ export function loginReq(mobile,code){
     })
 }
 
+// 发送保存的乘客的信息
+export function savePassenger(passenger){
+    //http://localhost:8090/api/
+    return request({
+        url: '/passenger/save',
+        method: 'POST',
+        data:{
+            ...passenger
+        }
+    })
+}
+
